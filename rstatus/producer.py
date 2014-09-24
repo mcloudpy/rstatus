@@ -16,7 +16,7 @@
 import argparse
 import redis
 from communication import StatusSender
-from system import StatusGetter
+from system import StatusGetter, FakeStatusGetter
 
 
 def main():
@@ -24,10 +24,15 @@ def main():
     parser.add_argument('-host', default='localhost', dest='host', help='Redis host.')
     parser.add_argument('-port', default=6379, dest='port', type=int, help='Redis port.')
     parser.add_argument('-db', default=0, dest='db_number', help='Redis DB number.')
+    parser.add_argument('-fake', default=False, dest='fake', help='Generate fake measure to debug the instance creation/removal.')
     args = parser.parse_args()
     
     r = redis.StrictRedis(host=args.host, port=args.port, db=args.db_number)
-    sg = StatusGetter()
+    if args.fake:
+      sg = FakeStatusGetter()
+    else:
+      params = { 'interval':1, 'percpu': True }
+      sg = StatusGetter( method_names=['cpu_percent'], params_for_calls=[params] )
     ss = StatusSender(r, "testvm", sg, 2)
     ss.store()
 

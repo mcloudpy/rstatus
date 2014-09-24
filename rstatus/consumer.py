@@ -26,7 +26,7 @@ def main():
     args = parser.parse_args()
     
     r = redis.StrictRedis(host=args.host, port=args.port, db=args.db_number)
-    keys = ["cpu_percent"]
+    keys = ["cpu_percent", "fake"]
     sr = StatusReceiver(r, "testvm", keys)
     print sr.get_last_measures()
 

@@ -19,13 +19,24 @@ import psutil
 
 class StatusGetter(object):
   
-  def __init__(self):
-    params = { 'interval':1, 'percpu': True }
-    self.call = [ ["cpu_percent", params] ]
+  def __init__(self, method_names, params_for_calls=None):
+    #params = { 'interval':1, 'percpu': True }
+    #self.call = [ ["cpu_percent", params] ]
+    self.call = []
+    
+    if params_for_calls is None:
+      for method_name in method_names:
+	self.call.append( [method_name, {}] )
+    else:
+      for method_name, params in zip(method_names, params_for_calls):
+	self.call.append( [method_name, params] )
   
   def get_pair(self):
     for method_name, params in self.call:
-      #method_name = self.call[0][0]
-      #params = self.call[0][1]
       methodToCall = getattr(psutil, method_name)
       yield method_name, methodToCall( **params )
+
+
+class FakeStatusGetter(object):  
+  def get_pair(self):
+    yield 'fake', True
