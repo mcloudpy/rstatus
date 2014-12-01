@@ -13,8 +13,9 @@
  @author: Aitor Gómez Goiri <aitor.gomez@deusto.es>
 """
 
+import socket
 import argparse
-import redis
+from redis import StrictRedis
 from communication import StatusReceiver
 
 
@@ -25,9 +26,9 @@ def main():
     parser.add_argument('-db', default=0, dest='db_number', help='Redis DB number.')
     args = parser.parse_args()
 
-    r = redis.StrictRedis(host=args.host, port=args.port, db=args.db_number)
+    r = StrictRedis(host=args.host, port=args.port, db=args.db_number)
     keys = ["cpu_percent", "fake"]
-    sr = StatusReceiver(r, "testvm", keys)
+    sr = StatusReceiver(r, keys)
     print sr.get_last_measures()
 
 

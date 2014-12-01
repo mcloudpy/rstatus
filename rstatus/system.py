@@ -30,12 +30,12 @@ class StatusGetter(object):
             for method_name, params in zip(method_names, params_for_calls):
                 self.call.append([method_name, params])
 
-    def get_pair(self):
+    def get_measure(self):
         for method_name, params in self.call:
-            methodToCall = getattr(psutil, method_name)
-            yield method_name, methodToCall(**params)
+            method_to_call = getattr(psutil, method_name)
+            yield method_name, method_to_call(**params)
 
 
 class FakeStatusGetter(object):
-    def get_pair(self):
+    def get_measure(self):
         yield 'fake', True
