@@ -7,7 +7,9 @@ Python library to periodically write and read the [system status](http://pythonh
 
 You can install the project and all its dependencies using pip:
 
-Recommended option for development: checkout the code and edit it whenever you need
+    pip install -e git+https://github.com/mcloudpy/rstatus.git
+
+Recommended option for development: checkout the code and edit it whenever you need.
  
     pip install -e git+https://github.com/mcloudpy/rstatus.git#egg=rstatus
      

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-'''
- Copyright (C) 2012 onwards University of Deusto
+"""
+ Copyright (C) 2014 onwards University of Deusto
   
  All rights reserved.
  
@@ -11,7 +11,7 @@
  listed below:
  
  @author: Aitor Gómez Goiri <aitor.gomez@deusto.es>
-'''
+"""
 
 from distutils.core import setup
 
@@ -24,12 +24,12 @@ setup(name='rstatus',
       packages=['rstatus'],
       install_requires=[
           'psutil==2.1.1',
-	  'redis==2.10.3',
+          'redis==2.10.3',
       ],
-      entry_points = {
-        'console_scripts': [
-            'rproducer = rstatus.producer:main',
-            'rconsumer = rstatus.consumer:main',
-        ],
+      entry_points={
+          'console_scripts': [
+              'rproducer = rstatus.producer:main',
+              'rconsumer = rstatus.consumer:main',
+          ],
       },
-     )
+)

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''
+"""
  Copyright (C) 2014 onwards University of Deusto
   
  All rights reserved.
@@ -11,7 +11,7 @@
  listed below:
  
  @author: Aitor Gómez Goiri <aitor.gomez@deusto.es>
-'''
+"""
 
 import argparse
 import redis
@@ -19,17 +19,16 @@ from communication import StatusReceiver
 
 
 def main():
-    parser = argparse.ArgumentParser( description='Write system status in Redis database.' )
+    parser = argparse.ArgumentParser(description='Write system status in Redis database.')
     parser.add_argument('-host', default='localhost', dest='host', help='Redis host.')
     parser.add_argument('-port', default=6379, dest='port', type=int, help='Redis port.')
     parser.add_argument('-db', default=0, dest='db_number', help='Redis DB number.')
     args = parser.parse_args()
-    
+
     r = redis.StrictRedis(host=args.host, port=args.port, db=args.db_number)
     keys = ["cpu_percent", "fake"]
     sr = StatusReceiver(r, "testvm", keys)
     print sr.get_last_measures()
-
 
 
 if __name__ == '__main__':

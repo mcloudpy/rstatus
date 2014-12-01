@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''
+"""
  Copyright (C) 2014 onwards University of Deusto
   
  All rights reserved.
@@ -11,32 +11,31 @@
  listed below:
  
  @author: Aitor Gómez Goiri <aitor.gomez@deusto.es>
-'''
+"""
 
 import psutil
 # print psutil.cpu_percent(interval=1, percpu=True) # example
 
 
 class StatusGetter(object):
-  
-  def __init__(self, method_names, params_for_calls=None):
-    #params = { 'interval':1, 'percpu': True }
-    #self.call = [ ["cpu_percent", params] ]
-    self.call = []
-    
-    if params_for_calls is None:
-      for method_name in method_names:
-	self.call.append( [method_name, {}] )
-    else:
-      for method_name, params in zip(method_names, params_for_calls):
-	self.call.append( [method_name, params] )
-  
-  def get_pair(self):
-    for method_name, params in self.call:
-      methodToCall = getattr(psutil, method_name)
-      yield method_name, methodToCall( **params )
+    def __init__(self, method_names, params_for_calls=None):
+        # params = { 'interval':1, 'percpu': True }
+        #self.call = [ ["cpu_percent", params] ]
+        self.call = []
+
+        if params_for_calls is None:
+            for method_name in method_names:
+                self.call.append([method_name, {}])
+        else:
+            for method_name, params in zip(method_names, params_for_calls):
+                self.call.append([method_name, params])
+
+    def get_pair(self):
+        for method_name, params in self.call:
+            methodToCall = getattr(psutil, method_name)
+            yield method_name, methodToCall(**params)
 
 
-class FakeStatusGetter(object):  
-  def get_pair(self):
-    yield 'fake', True
+class FakeStatusGetter(object):
+    def get_pair(self):
+        yield 'fake', True
