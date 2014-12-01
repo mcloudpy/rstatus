@@ -1,0 +1,9 @@
+
+# file: redisservers.yml
+
+- name: Install Redis
+  hosts: db
+  roles:
+    - redis
+  tags:
+    - redis

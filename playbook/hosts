@@ -1,0 +1,19 @@
+
+# In the example, it corresponds with the host created using vagrant
+redis_host ansible_ssh_host=192.168.111.2
+sample_host1 ansible_ssh_host=192.168.111.3
+sample_host2 ansible_ssh_host=192.168.111.4
+
+
+[db]
+redis_host
+
+
+[measurable]
+sample_host1
+sample_host2
+
+
+[local:children]
+db
+measurable

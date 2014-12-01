@@ -1,0 +1,7 @@
+---
+# Connection settings for a vagrant box
+
+remote_user: "vagrant" # By default this is "vagrant," since that is what most public boxes are made as.
+
+ansible_ssh_user: "vagrant" # needed to be this
+ansible_ssh_private_key_file: ~/.vagrant.d/insecure_private_key

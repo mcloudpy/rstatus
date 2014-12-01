@@ -1,0 +1,4 @@
+
+# file: main.yml
+- include: redisservers.yml
+- include: measuredhosts.yml

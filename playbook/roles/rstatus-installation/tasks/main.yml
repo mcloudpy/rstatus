@@ -1,0 +1,55 @@
+---
+
+- name: Install git, virtualenv and pip
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  sudo: True
+  when: ansible_os_family == "Debian"
+  with_items:
+    - git
+    - python
+    - python-dev
+    - python-pip
+    - python-virtualenv
+  tags:
+    - apt
+    - installation
+    - install
+    - debian
+    - git
+    - virtualenv
+
+
+- name: create virtualenv folder
+  file: path="{{ virtualenvwrapper_path }}"
+        state=directory
+  tags:
+    - virtualenv
+    - create
+    - folder
+
+
+- name: Install app
+  pip:
+    virtualenv: "{{ virtualenv_rstatus_path }}"
+    virtualenv_site_packages: yes
+    name: "git+https://github.com/mcloudpy/rstatus.git#egg=rstatus"
+  tags:
+    - virtualenv
+    - pip
+    - weblab
+
+
+- name: Execution permissions for bin
+  # I don't know why, activation scripts are now executable by default
+  file: path="{{ virtualenv_rstatus_path }}/bin/{{ item }}" mode=0754
+  with_items:
+    - activate
+    - activate.csh
+    - activate.fish
+    - activate_this.py
+  tags:
+    - virtualenv
+    - activate
+    - permission

@@ -1,0 +1,9 @@
+---
+
+# Virtualenv role settings (https://galaxy.ansible.com/list#/roles/347)
+virtualenv_version: 1.11.6
+
+# Details for rstatus installation
+virtualenv_name: "rstatus"
+virtualenvwrapper_path: "/home/{{remote_user}}/.virtualenvs"
+virtualenv_rstatus_path: "{{virtualenvwrapper_path}}/{{virtualenv_name}}"

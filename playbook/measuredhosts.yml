@@ -1,0 +1,9 @@
+
+# file: measuredhosts.yml
+
+- name: Install rstatus
+  hosts: measurable
+  roles:
+    - rstatus-installation
+  tags:
+    - rstatus
