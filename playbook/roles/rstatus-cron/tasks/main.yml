@@ -1,10 +1,19 @@
 ---
 
-- name: Measure periodically
+
+- name: Copy configuration file to the machine.
+  copy: src="{{ local_config_file_path }}/{{config_file_name}}" dest="{{ remote_config_file_path }}"
+  tags:
+    - copy
+    - configuration
+    - file
+
+
+- name: Configure the periodical measure
   cron:
     name: "Measure"
     minute: "*/2"
-    job: "{{ virtualenv_rstatus_path }}/bin/rproducer -host {{ redis_hostip }} -port 6379"
+    job: "{{ virtualenv_rstatus_path }}/bin/rproducer -host {{ redis_hostip }} -port 6379 -config {{ remote_config_file_path }}/{{ config_file_name }}"
   tags:
     - cron
     - crontab

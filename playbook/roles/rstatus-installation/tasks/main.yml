@@ -36,6 +36,7 @@
     virtualenv: "{{ virtualenv_rstatus_path }}"
     virtualenv_site_packages: yes
     name: "git+https://github.com/mcloudpy/rstatus.git#egg=rstatus"
+    state: latest
   tags:
     - virtualenv
     - pip

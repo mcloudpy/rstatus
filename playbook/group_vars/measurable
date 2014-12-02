@@ -7,3 +7,8 @@ virtualenv_version: 1.11.6
 virtualenv_name: "rstatus"
 virtualenvwrapper_path: "/home/{{remote_user}}/.virtualenvs"
 virtualenv_rstatus_path: "{{virtualenvwrapper_path}}/{{virtualenv_name}}"
+
+# Config file
+config_file_name: "config.yml"
+local_config_file_path: ".."
+remote_config_file_path: "/home/{{remote_user}}"

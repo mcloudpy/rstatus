@@ -27,9 +27,10 @@ def main():
     args = parser.parse_args()
 
     r = StrictRedis(host=args.host, port=args.port, db=args.db_number)
-    keys = ["cpu_percent", "fake"]
+    keys = ["cpu_percent", "disk_partitions", "fake"]
     sr = StatusReceiver(r, keys)
-    print sr.get_last_measures()
+    for k, v in sr.get_last_measures().iteritems():
+        print "%s: %s" % (k, v)
 
 
 if __name__ == '__main__':
