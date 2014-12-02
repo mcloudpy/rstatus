@@ -3,7 +3,13 @@ redis-status
 
 Python library to periodically write and read the [system status](http://pythonhosted.org/psutil/) in a [Redis DB](http://redis.io/).
 
-### Installation
+
+### Installation and configuration on a remote machine
+
+If you want to start monitoring a remote machine using _rstatus_, go to the [playbook directory](playbook) and follow the instructions.
+
+
+### Local installation
 
 You can install the project and all its dependencies using pip:
 
@@ -12,11 +18,11 @@ You can install the project and all its dependencies using pip:
 Recommended option for development: checkout the code and edit it whenever you need.
  
     pip install -e git+https://github.com/mcloudpy/rstatus.git#egg=rstatus
-     
+
 If you have already downloaded the code and you don't need to edit it, you can simply do...
  
     pip install ./
-     
+
 If a previous version was already installed use this:
  
     pip install ./ --upgrade
