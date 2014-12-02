@@ -14,7 +14,7 @@
 """
 
 import yaml
-
+import argparse
 
 class ConfigReader(object):
     def __init__(self, filename):
@@ -48,5 +48,10 @@ class ConfigReader(object):
 
 
 if __name__ == '__main__':
-    cr = ConfigReader("../config.yml")
+    parser = argparse.ArgumentParser(description='Read config file and show its properties.')
+    parser.add_argument('-config', default="../config.yml", dest='config',
+                        help='Configuration file with the psutil methods to be called.')
+    args = parser.parse_args()
+
+    cr = ConfigReader(args.config)
     cr.debug()
