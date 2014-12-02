@@ -19,19 +19,26 @@ from redis import StrictRedis
 from communication import StatusReceiver
 
 
-def main():
+def get_last_measures(host, port, db_number):
+    r = StrictRedis(host=host, port=port, db=db_number)
+    keys = ["cpu_percent", "disk_partitions", "fake"]
+    sr = StatusReceiver(r, keys)
+    return sr.get_last_measures()
+
+
+def show_measures(measures):
+    for k, v in measures.iteritems():
+        print "Hostname: %s" % k
+        for kv in v:
+            print "\t%s:" % kv
+            print "\t\t%s" % v[kv]
+
+
+if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Write system status in Redis database.')
     parser.add_argument('-host', default='localhost', dest='host', help='Redis host.')
     parser.add_argument('-port', default=6379, dest='port', type=int, help='Redis port.')
     parser.add_argument('-db', default=0, dest='db_number', help='Redis DB number.')
     args = parser.parse_args()
-
-    r = StrictRedis(host=args.host, port=args.port, db=args.db_number)
-    keys = ["cpu_percent", "disk_partitions", "fake"]
-    sr = StatusReceiver(r, keys)
-    for k, v in sr.get_last_measures().iteritems():
-        print "%s: %s" % (k, v)
-
-
-if __name__ == '__main__':
-    main()
+    m = get_last_measures(args.host, args.port, args.db_number)
+    show_measures(m)

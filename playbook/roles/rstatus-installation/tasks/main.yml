@@ -40,7 +40,7 @@
   tags:
     - virtualenv
     - pip
-    - weblab
+    - rstatus
 
 
 - name: Execution permissions for bin
