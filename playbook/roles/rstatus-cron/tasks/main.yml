@@ -1,0 +1,11 @@
+---
+
+- name: Measure periodically
+  cron:
+    name: "Measure"
+    minute: "*/2"
+    job: "{{ virtualenv_rstatus_path }}/bin/rproducer -host {{ redis_hostip }} -port 6379"
+  tags:
+    - cron
+    - crontab
+    - job
