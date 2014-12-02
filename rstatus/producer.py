@@ -17,6 +17,7 @@ import socket
 import argparse
 from redis import StrictRedis
 from communication import StatusSender
+from config import ConfigReader
 from system import StatusGetter, FakeStatusGetter
 
 
@@ -27,6 +28,8 @@ def main():
     parser.add_argument('-db', default=0, dest='db_number', help='Redis DB number.')
     parser.add_argument('-fake', default=False, dest='fake',
                         help='Generate fake measure to debug the instance creation/removal.')
+    parser.add_argument('-config', default=None, dest='config',
+                        help='Configuration file with the psutil methods to be called.')
     parser.add_argument('-hostname', default=socket.gethostname(), dest='hostname',
                         help='Name of the host whose performance will be measured.')
     args = parser.parse_args()
@@ -35,8 +38,14 @@ def main():
     if args.fake:
         sg = FakeStatusGetter()
     else:
-        params = {'interval': 1, 'percpu': True}
-        sg = StatusGetter(method_names=['cpu_percent'], params_for_calls=[params])
+        if args.config:
+            cr = ConfigReader(args.config)
+            methods = cr.get_methods()
+            params = cr.get_params()
+        else:
+            methods = ['cpu_percent']
+            params = [{'interval': 1, 'percpu': True}]
+        sg = StatusGetter(method_names=methods, params_for_calls=params)
 
     ss = StatusSender(r, args.hostname, sg, 2)
     ss.store()

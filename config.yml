@@ -1,0 +1,11 @@
+
+# psutil.cpu_percent(interval=1, percpu=True)
+- method: 'cpu_percent'
+  params:
+    - 'interval': 1
+    - 'percpu': True
+
+# psutil.disk_partitions(all=False):
+- method: 'disk_partitions'
+  params:
+    - 'all': True

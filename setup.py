@@ -25,6 +25,7 @@ setup(name='rstatus',
       install_requires=[
           'psutil==2.1.1',
           'redis==2.10.3',
+          'pyyaml',
       ],
       entry_points={
           'console_scripts': [
