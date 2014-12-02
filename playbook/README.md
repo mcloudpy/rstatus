@@ -63,12 +63,11 @@ Depending on you needs, you will need to follow one of the following instruction
 * Do all the magic.
   This option installs _redis_ in the server and installs _rstatus_ in all the machines whose performance wants to be measured.
 
-    ansible-playbook -vvvv -u vagrant --private-key=[private-key-location] -l 'local' -i hosts main.yml
+      ansible-playbook -vvvv -u vagrant --private-key=[private-key-location] -l 'local' -i hosts main.yml
 
 * Just instrument the hosts to be measured.
 
-    ansible-playbook -vvvv -u vagrant --private-key=[private-key-location] -l 'local' -i hosts measuredhosts.yml
-
+        ansible-playbook -vvvv -u vagrant --private-key=[private-key-location] -l 'local' -i hosts measuredhosts.yml
 
 
 Check that everything works
@@ -87,4 +86,4 @@ A return sample could be:
     2) "host2/cpu_percent"
     3) "host1/disk_partitions"
 
-Note that if you have deployed the experimental environment mentioned above, _host_ will correspond to '_localhost_' and _port_ to '_16379_'.
+Note that if you have deployed the experimental environment mentioned above, _host_ will correspond to _localhost_ and _port_ to _16379_.
