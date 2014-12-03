@@ -39,7 +39,7 @@ def store_measure(args):
     ss.store()
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(description='Write system status in Redis database.')
     parser.add_argument('-host', default='localhost', dest='host', help='Redis host.')
     parser.add_argument('-port', default=6379, dest='port', type=int, help='Redis port.')
@@ -52,3 +52,7 @@ if __name__ == '__main__':
                         help='Name of the host whose performance will be measured.')
     args = parser.parse_args()
     store_measure(args)
+
+
+if __name__ == '__main__':
+    main()

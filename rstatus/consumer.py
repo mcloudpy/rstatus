@@ -13,7 +13,6 @@
  @author: Aitor Gómez Goiri <aitor.gomez@deusto.es>
 """
 
-import socket
 import argparse
 from redis import StrictRedis
 from communication import StatusReceiver
@@ -34,7 +33,7 @@ def show_measures(measures):
             print "\t\t%s" % v[kv]
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(description='Write system status in Redis database.')
     parser.add_argument('-host', default='localhost', dest='host', help='Redis host.')
     parser.add_argument('-port', default=6379, dest='port', type=int, help='Redis port.')
@@ -42,3 +41,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     m = get_last_measures(args.host, args.port, args.db_number)
     show_measures(m)
+
+
+if __name__ == '__main__':
+    main()
