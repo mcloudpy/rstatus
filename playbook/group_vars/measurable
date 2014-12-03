@@ -7,6 +7,7 @@ virtualenv_version: 1.11.6
 virtualenv_name: "rstatus"
 virtualenvwrapper_path: "/home/{{remote_user}}/.virtualenvs"
 virtualenv_rstatus_path: "{{virtualenvwrapper_path}}/{{virtualenv_name}}"
+rstatus_db_number: 15
 
 # Config file
 config_file_name: "config.yml"
