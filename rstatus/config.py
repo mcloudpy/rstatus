@@ -16,6 +16,7 @@
 import yaml
 import argparse
 
+
 class ConfigReader(object):
     def __init__(self, filename):
         self.config = self._parse(filename)
