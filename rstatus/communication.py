@@ -15,6 +15,7 @@
 
 import re
 
+
 class RedisClient(object):
     def __init__(self, redis_connection):
         self._conn = redis_connection

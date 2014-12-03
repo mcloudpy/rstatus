@@ -2,3 +2,5 @@
 
 redis_hostname: "{{groups['db'][0]}}" # I consider that there is only one.
 redis_hostip: "{{hostvars[redis_hostname]['ansible_ssh_host']}}"
+
+cron_logfile: "/dev/null" # Or: "/var/log/cron"
