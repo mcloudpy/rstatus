@@ -35,7 +35,7 @@ def store_measure(args):
             params = [{'interval': 1, 'percpu': True}]
         sg = StatusGetter(method_names=methods, params_for_calls=params)
 
-    ss = StatusSender(r, args.hostname, sg, 2)
+    ss = StatusSender(r, args.hostname, sg, args.max)
     ss.store()
 
 
@@ -50,6 +50,8 @@ def main():
                         help='Configuration file with the psutil methods to be called.')
     parser.add_argument('-hostname', default=socket.gethostname(), dest='hostname',
                         help='Name of the host whose performance will be measured.')
+    parser.add_argument('-max', default=10, dest='max',
+                        help='Number of maximum measures to be taken.')
     args = parser.parse_args()
     store_measure(args)
 
