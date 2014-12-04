@@ -41,12 +41,22 @@ class ConfigReader(object):
             ret.append(param_dict)
         return ret
 
+    def get_select(self):
+        ret = []
+        for c in self.config:
+            if 'select' in c: # not a list!
+                ret.append(c['select'])
+            else:
+                ret.append('')
+        return ret
+
     def debug(self):
-        for m, params in zip(self.get_methods(), self.get_params()):
+        for m, params, sel in zip(self.get_methods(), self.get_params(), self.get_select()):
+            s = "." + sel if sel else ""
             printable_params = ""
             for param_key in params:
                 printable_params += ", %s=%s" % (param_key, params[param_key])
-            print "psutil.%s(%s)" % (m, printable_params[2:])  # without first ", "
+            print "psutil.%s(%s)%s" % (m, printable_params[2:], s)  # without first ", "
 
 
 if __name__ == '__main__':
