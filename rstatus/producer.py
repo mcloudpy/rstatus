@@ -30,10 +30,12 @@ def store_measure(args):
             cr = ConfigReader(args.config)
             methods = cr.get_methods()
             params = cr.get_params()
+            selects = cr.get_select()
         else:
             methods = ['cpu_percent']
             params = [{'interval': 1, 'percpu': True}]
-        sg = StatusGetter(method_names=methods, params_for_calls=params)
+            selects = None
+        sg = StatusGetter(method_names=methods, params_for_calls=params, select_for_calls=selects)
 
     ss = StatusSender(r, args.hostname, sg, args.max)
     ss.store()

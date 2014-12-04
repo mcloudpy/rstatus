@@ -18,22 +18,31 @@ import psutil
 
 
 class StatusGetter(object):
-    def __init__(self, method_names, params_for_calls=None):
+    def __init__(self, method_names, params_for_calls=None, select_for_calls=None):
         # params = { 'interval':1, 'percpu': True }
-        #self.call = [ ["cpu_percent", params] ]
-        self.call = []
+        # self.call = [ ["cpu_percent", params] ]
+        assert params_for_calls is None or len(params_for_calls) == len(method_names), \
+            "There must be as many params as method names (None values are allowed!)"
+        assert select_for_calls is None or len(select_for_calls) == len(method_names), \
+            "There must be as many selects as method names (None values are allowed!)"
 
-        if params_for_calls is None:
-            for method_name in method_names:
-                self.call.append([method_name, {}])
-        else:
-            for method_name, params in zip(method_names, params_for_calls):
-                self.call.append([method_name, params])
+        self.call = []
+        i = 0
+        for method_name in method_names:
+            params = params_for_calls[i] if params_for_calls else {}
+            sel = select_for_calls[i] if select_for_calls else {}
+            self.call.append([method_name, params, sel])
+            i += 1
 
     def get_measure(self):
-        for method_name, params in self.call:
+        for method_name, params, sel in self.call:
             method_to_call = getattr(psutil, method_name)
-            yield method_name, method_to_call(**params)
+            name = method_name
+            ret = method_to_call(**params)
+            if sel:
+                name = name + "." + sel
+                ret = getattr(ret, sel)  # select an attribute from the return
+            yield name, ret
 
 
 class FakeStatusGetter(object):

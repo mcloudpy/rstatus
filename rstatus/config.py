@@ -47,7 +47,7 @@ class ConfigReader(object):
             if 'select' in c: # not a list!
                 ret.append(c['select'])
             else:
-                ret.append('')
+                ret.append(None)
         return ret
 
     def debug(self):
