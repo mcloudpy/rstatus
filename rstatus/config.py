@@ -32,11 +32,12 @@ class ConfigReader(object):
         ret = []
         for c in self.config:
             param_dict = {}
-            for param in c['params']:
-                # param is a dictionary with a unique key and value
-                k = param.iterkeys().next()
-                v = param.itervalues().next()
-                param_dict[k] = v
+            if 'params' in c:
+                for param in c['params']:
+                    # param is a dictionary with a unique key and value
+                    k = param.iterkeys().next()
+                    v = param.itervalues().next()
+                    param_dict[k] = v
             ret.append(param_dict)
         return ret
 
