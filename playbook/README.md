@@ -76,6 +76,7 @@ Check that everything works
 To check that hosts are sending their measures to the [Redis](http://redis.io/) server, try the following:
 
     $ redis-cli -h [host] -p [port]
+    > select [db_number]
     > keys "*/*"
 
 This will return the hosts that have send their measures and the types of measures.
