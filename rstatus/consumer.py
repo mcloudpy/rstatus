@@ -20,7 +20,7 @@ from communication import StatusReceiver
 
 def get_last_measures(host, port, db_number):
     r = StrictRedis(host=host, port=port, db=db_number)
-    keys = ["cpu_percent", "swap_memory", "fake"]
+    keys = ["cpu_percent", "swap_memory.percent", "fake"]
     sr = StatusReceiver(r, keys)
     return sr.get_last_measures()
 
