@@ -22,7 +22,7 @@
     - virtualenv
 
 
-- name: create virtualenv folder
+- name: Create virtualenv folder
   file: path="{{ virtualenvwrapper_path }}"
         state=directory
   tags:
