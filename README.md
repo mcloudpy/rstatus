@@ -59,8 +59,8 @@ from redis import StrictRedis
 from communication import StatusReceiver
 
 r = StrictRedis(host=host, port=port, db=db_number)
-# The aspects to query in the DB. They correspond with "psutil" method names.
-keys = ["cpu_percent", "swap_memory"]
+# The aspects to query in the DB. They correspond with "psutil" method names and their subfields.
+keys = ["cpu_percent", "swap_memory.percent"]
 sr = StatusReceiver(r, keys)
 print sr.get_last_measures()
 ```
