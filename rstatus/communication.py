@@ -41,26 +41,52 @@ class StatusSender(RedisClient):
 
 class StatusReceiver(RedisClient):
     def __init__(self, redis_connection, status_keys):
+        """
+        :param redis_connection:
+        :param status_keys: Features which will be taken into account.
+        :return:
+        """
         super(StatusReceiver, self).__init__(redis_connection)
         self._status_keys = status_keys
-        self.regex = re.compile("/", re.VERBOSE)
+        self._regex = re.compile("/", re.VERBOSE)
 
     def _put_in_dict(self, dictio, machine_id, feature_name, value):
         if machine_id not in dictio:
             dictio[machine_id] = {}
         dictio[machine_id][feature_name] = value
 
-    def get_last_measures(self, machine_ids=None):
+    def _get_whatever_measures(self, method_to_call, machine_ids=None):
+        """
+        :param machine_ids:
+        :param number_measures: If None all the measures will be returned.
+        :param method_to_call: Method from this class to be called to obtain the desired value from Redis DB.
+        :return:
+        """
         measures = {}
         for status_key in self._status_keys:
             if machine_ids is None:
                 possible_features = self._conn.keys("*/%s" % status_key)
                 for feature in possible_features:
-                    value = self._conn.lpop(feature)  # get last value
-                    machine_id, feature_name = self.regex.split(feature)
-                    self._put_in_dict(measures, machine_id, feature_name, value)
+                    values = method_to_call(feature)
+                    machine_id, feature_name = self._regex.split(feature)
+                    self._put_in_dict(measures, machine_id, feature_name, values)
             else:
                 for machine_id in machine_ids:
-                    value = self._conn.lpop("%s/%s" % (machine_id, status_key))  # get last value
-                    self._put_in_dict(measures, machine_id, status_key, value)
+                    values = method_to_call("%s/%s" % (machine_id, status_key))  # get last value
+                    self._put_in_dict(measures, machine_id, status_key, values)
         return measures
+
+    def get_last_measures(self, machine_ids=None):
+        return self._get_whatever_measures(self._conn.lpop, machine_ids)
+
+    def _get_all_measures_by_feature(self, feature):
+        l = self._conn.llen(feature)
+        return self._conn.lrange(feature, 0, l)
+
+    def get_all_measures(self, machine_ids=None):
+        """
+        :param machine_ids:
+        :param number_measures: If None all the measures will be returned.
+        :return:
+        """
+        return self._get_whatever_measures(self._get_all_measures_by_feature, machine_ids)
